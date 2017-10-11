@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/k0kubun/pp"
 )
@@ -21,20 +22,17 @@ func fib(n int) int {
 }
 
 func main() {
-	// 0
-	pp.Println(fib(0))
-	// 1
-	pp.Println(fib(1))
-	// 1
-	pp.Println(fib(2))
-	// 2
-	pp.Println(fib(3))
-	// 3
-	pp.Println(fib(4))
-	// 5
-	pp.Println(fib(5))
-	// 55
-	pp.Println(fib(10))
-	// -10 is unsupported number
-	pp.Println(fib(-10))
+	// `os.Args[0]` にはコマンド名が入る
+	if len(os.Args) < 2 {
+		pp.Println("Missing params!")
+		os.Exit(1)
+	}
+
+	i, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		pp.Printf("%s\n", err)
+		os.Exit(1)
+	}
+
+	pp.Println(fib(i))
 }
