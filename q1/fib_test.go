@@ -5,37 +5,26 @@ import (
 )
 
 func TestFib(t *testing.T) {
-	if fib(0) != 0 {
-		t.Fatalf("Error fib(0)")
+	// https://github.com/golang/go/wiki/TableDrivenTests
+	type Case struct {
+		n, out int
 	}
-	if fib(1) != 1 {
-		t.Fatalf("Error fib(1)")
+	cases := []Case{
+		{0, 0},
+		{1, 1},
+		{2, 1},
+		{3, 2},
+		{4, 3},
+		{5, 5},
+		{6, 8},
+		{7, 13},
+		{8, 21},
+		{9, 34},
+		{10, 55},
 	}
-	if fib(2) != 1 {
-		t.Fatalf("Error fib(2)")
-	}
-	if fib(3) != 2 {
-		t.Fatalf("Error fib(3)")
-	}
-	if fib(4) != 3 {
-		t.Fatalf("Error fib(4)")
-	}
-	if fib(5) != 5 {
-		t.Fatalf("Error fib(5)")
-	}
-	if fib(6) != 8 {
-		t.Fatalf("Error fib(6)")
-	}
-	if fib(7) != 13 {
-		t.Fatalf("Error fib(7)")
-	}
-	if fib(8) != 21 {
-		t.Fatalf("Error fib(8)")
-	}
-	if fib(9) != 34 {
-		t.Fatalf("Error fib(9)")
-	}
-	if fib(10) != 55 {
-		t.Fatalf("Error fib(10)")
+	for i, c := range cases {
+		if got := fib(c.n); got != c.out {
+			t.Errorf("#%d: fib(%d) want %d, got %d\n", i, c.n, c.out, got)
+		}
 	}
 }
