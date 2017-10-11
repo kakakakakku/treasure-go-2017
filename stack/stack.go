@@ -5,24 +5,28 @@ import (
 )
 
 type Stack struct {
-	Store []string
+	store []string
+	limit int
 }
 
 func (s *Stack) Pop() string {
-	if len(s.Store) == 0 {
+	if len(s.store) == 0 {
 		return ""
 	}
-	v := s.Store[len(s.Store)-1]
-	s.Store = s.Store[:len(s.Store)-1]
+	v := s.store[len(s.store)-1]
+	s.store = s.store[:len(s.store)-1]
 	return v
 }
 
 func (s *Stack) Push(str string) {
-	s.Store = append(s.Store, str)
+	if len(s.store) == s.limit {
+		s.store = s.store[1:]
+	}
+	s.store = append(s.store, str)
 }
 
 func main() {
-	s := &Stack{}
+	s := &Stack{limit: 2}
 
 	s.Push("dataA")
 	s.Push("dataB")
@@ -34,12 +38,12 @@ func main() {
 	// "dataB"
 	pp.Println(s.Pop())
 
+	// ""
+	pp.Println(s.Pop())
+
 	s.Push("dataD")
 
 	// "dataD"
-	pp.Println(s.Pop())
-
-	// "dataA"
 	pp.Println(s.Pop())
 
 	// ""
